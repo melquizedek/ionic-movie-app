@@ -1,5 +1,12 @@
 <ion-searchbar (ionInput)="searchMovie($event)"></ion-searchbar>
-<a href="#" *ngFor="let movie of movies" class="btnViewMovie">
+
+<ion-card *ngIf="!this.movies" color="danger">
+    <ion-card-header style="text-align: center">
+      Movie not found!
+    </ion-card-header>
+</ion-card>
+
+<a href="#" *ngFor="let movie of movies" class="btnViewMovie" (click)="selectedMovie(movie.imdbID)">
 <ion-card class="movieList">
     <ion-card-content>
         <span class="posterCon">

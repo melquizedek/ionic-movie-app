@@ -10,12 +10,14 @@ import { MoviesPage } from '../pages/movies/movies';
 import { MovieProvider } from '../providers/movie/movie.service';
 import { HttpClientModule } from '@angular/common/http';
 import { GlobalService } from '../providers/global.service';
+import { MovieViewPage } from '../pages/movie-view/movie-view';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    MoviesPage
+    MoviesPage,
+    MovieViewPage  
   ],
   imports: [
     BrowserModule,
@@ -26,7 +28,8 @@ import { GlobalService } from '../providers/global.service';
   entryComponents: [
     MyApp,
     HomePage,
-    MoviesPage
+    MoviesPage,
+    MovieViewPage
   ],
   providers: [
     StatusBar,

@@ -2,6 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MovieProvider } from '../../providers/movie/movie.service';
 import { Subscription } from 'rxjs/Subscription';
+import { MovieViewPage } from '../movie-view/movie-view';
 
 /**
  * Generated class for the MoviesPage page.
@@ -24,9 +25,8 @@ export class MoviesPage implements OnDestroy {
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               private movieService: MovieProvider) {
-
                 this.movieService.getMovie('Marvel', '10', '', '');
-              this.initTialMovieListSubcrip  = this.movieService.movies$.subscribe((resp: any) => {
+                this.initTialMovieListSubcrip  = this.movieService.movies$.subscribe((resp: any) => {
                      this.movies = resp.Search;
                   });
   }
@@ -36,11 +36,16 @@ export class MoviesPage implements OnDestroy {
   }
 
   searchMovie(ev: any) {
-      let keyword = ev.target.value;
+      let keyword = (ev.target.value) ? ev.target.value : "";
       this.movieService.getMovie(keyword, '10', '', '');
       this.movieResultListSubscrip = this.movieService.movies$.subscribe((resp: any) => {
-          this.movies = resp.Search;    
+          this.movies = resp.Search;
       });
+  }
+
+  selectedMovie(imdbId: any) {
+    console.log(imdbId);
+    this.navCtrl.push(MovieViewPage, {imdbId: imdbId});
   }
 
   ngOnDestroy() {
