@@ -16,6 +16,9 @@ export class MovieProvider {
   movies$: Observable<any>;
   movieObserver$: Observer<any>;
 
+  getMovieById$: Observable<any>;
+  getMovieByIdObserver$: Observer<any>;
+
   constructor(public http: HttpClient, private CONFIG: GlobalService) {
   }
 
@@ -36,6 +39,17 @@ export class MovieProvider {
             this.movieObserver$.next(resp);
           });
       });
-  }
+
+    }
+
+    getMovieById(imdbId: any) : Observable<any> {
+        return Observable.create((ob: Observer<any>) => {
+                this.getMovieByIdObserver$ = ob;
+                this.http.get(this.CONFIG.API_HOST + '&i=' + imdbId + '&plot=full')
+                          .subscribe((resp: any) => {
+                              this.getMovieByIdObserver$.next(resp);
+                          });
+            });
+    } 
 
 }

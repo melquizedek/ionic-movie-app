@@ -10,17 +10,25 @@
 <ion-card class="movieList">
     <ion-card-content>
         <span class="posterCon">
-            <img src="https://images.immediate.co.uk/volatile/sites/3/2017/11/imagenotavailable1-39de324.png?quality=90&lb=300,200&background=white" *ngIf="movie.Poster === 'N/A'"/>
+            <img src="{{ CONFIG.NO_IMG }}" *ngIf="movie.Poster === 'N/A'"/>
             <img src="{{ movie.Poster }}" *ngIf="movie.Poster !== 'N/A'"/>
         </span>
         <ion-card-title>
         {{ movie.Title }}
         </ion-card-title>
-        <ion-item>
-            <ion-icon name="calendar" item-start></ion-icon>
-            Year
-            <ion-badge item-end>{{ movie.Year }}</ion-badge>
-        </ion-item>
+        
+        <ion-grid>
+            <ion-row>
+                <ion-col col-lg-4 col-md-3 col-sm-3>
+                        <ion-item>
+                            <ion-icon name="calendar" item-start></ion-icon>
+                            Year
+                            <ion-badge item-end>{{ movie.Year }}</ion-badge>
+                        </ion-item>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+
     </ion-card-content>
   </ion-card>
   </a>

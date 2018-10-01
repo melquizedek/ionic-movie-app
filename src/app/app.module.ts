@@ -11,6 +11,7 @@ import { MovieProvider } from '../providers/movie/movie.service';
 import { HttpClientModule } from '@angular/common/http';
 import { GlobalService } from '../providers/global.service';
 import { MovieViewPage } from '../pages/movie-view/movie-view';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { MovieViewPage } from '../pages/movie-view/movie-view';
   imports: [
     BrowserModule,
     HttpClientModule,
+    ReactiveFormsModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],

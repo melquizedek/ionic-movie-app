@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MovieProvider } from '../../providers/movie/movie.service';
 import { Subscription } from 'rxjs/Subscription';
 import { MovieViewPage } from '../movie-view/movie-view';
+import { GlobalService } from '../../providers/global.service';
 
 /**
  * Generated class for the MoviesPage page.
@@ -24,6 +25,7 @@ export class MoviesPage implements OnDestroy {
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
+              private CONFIG: GlobalService,
               private movieService: MovieProvider) {
                 this.movieService.getMovie('Marvel', '10', '', '');
                 this.initTialMovieListSubcrip  = this.movieService.movies$.subscribe((resp: any) => {
@@ -46,7 +48,6 @@ export class MoviesPage implements OnDestroy {
   }
 
   selectedMovie(imdbId: any) {
-    console.log(imdbId);
     this.navCtrl.push(MovieViewPage, {imdbId: imdbId});
   }
 

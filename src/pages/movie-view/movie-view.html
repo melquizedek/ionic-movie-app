@@ -7,12 +7,63 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>movie-view</ion-title>
+    <ion-title>Movie</ion-title>
   </ion-navbar>
 
 </ion-header>
 
-
 <ion-content padding>
+  <ion-card>
+      <img src="{{CONFIG.NO_IMG}}" *ngIf="Poster === 'N/A'"/>
+      <img src="{{Poster}}" *ngIf="Poster !== 'N/A'"/>
+    <ion-card-content>
+      <ion-card-title>
+        <p class="title">{{Title}}</p>
+        <p>Genre: {{Genre}}</p>
+        <p>Director: {{Director}}</p>
+        <p>Language: {{Language}}</p>
+        <p>Actors: {{Actors}}</p>
+      </ion-card-title>
+      <p>
+        {{Plot}}
+      </p>
+      <ion-grid>
+          <ion-row>
+            <ion-col col-6>
+                <ion-item>
+                    <ion-icon name="star" item-start></ion-icon>
+                    Ratings:
+                </ion-item>
+            </ion-col>
+            <ion-col col-6>
+                <ion-item>
+                    <ion-icon name="calendar" item-start></ion-icon>
+                    Released:
+                    <ion-badge item-end>{{Released}}</ion-badge>
+                  </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+              <ion-col col-6>
+                <ion-badge item-end *ngFor="let rate of Ratings">{{ rate.Source + ' : ' + rate.Value}}</ion-badge>
+              </ion-col>
+          </ion-row>
+          <ion-row>
+              <ion-col offset-5>
+                  <button ion-button (click)="isAddComment = !isAddComment">Add Comment</button>
+              </ion-col>
+          </ion-row>
+        </ion-grid>
 
+        <ion-list *ngIf="isAddComment">
+          <ion-item>
+            <ion-input type="text" fixed [formControl]="comment" placeholder="Enter your comment here"></ion-input>
+          </ion-item>
+          <ion-item>
+              <button ion-button (click)="addComment()">Submit</button>
+          </ion-item>
+        </ion-list>
+        
+    </ion-card-content>
+  </ion-card>
 </ion-content>
