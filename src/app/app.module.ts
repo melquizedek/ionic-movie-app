@@ -13,6 +13,18 @@ import { GlobalService } from '../providers/global.service';
 import { MovieViewPage } from '../pages/movie-view/movie-view';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+
+export const firebaseConf = {
+  apiKey: "AIzaSyC_MZY9iMpZTVQfPJS8nJY8xsWiMUL2PW0",
+  authDomain: "movie-app-directory.firebaseapp.com",
+  databaseURL: "https://movie-app-directory.firebaseio.com",
+  projectId: "movie-app-directory",
+  storageBucket: "movie-app-directory.appspot.com",
+  messagingSenderId: "350925860108"
+};
+
 @NgModule({
   declarations: [
     MyApp,
@@ -24,7 +36,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(firebaseConf),
+    AngularFireDatabaseModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

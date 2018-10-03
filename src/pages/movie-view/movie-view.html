@@ -66,4 +66,15 @@
         
     </ion-card-content>
   </ion-card>
+
+    <ion-list *ngIf="comments">
+      <ion-item>
+          <h1>Comments:</h1>
+      </ion-item>
+      <ion-item *ngFor="let comment of comments">
+        <h2>{{ comment.comment }}</h2>
+        <p>Date: {{ comment.date | date:'medium' }}</p>
+      </ion-item>
+    </ion-list>
+
 </ion-content>

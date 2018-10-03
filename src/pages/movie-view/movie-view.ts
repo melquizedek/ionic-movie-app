@@ -4,6 +4,9 @@ import { MovieProvider } from '../../providers/movie/movie.service';
 import { Subscription } from 'rxjs/Subscription';
 import { GlobalService } from '../../providers/global.service';
 import { FormControl } from '@angular/forms';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import { Comment } from '@angular/compiler';
+import { ArraySortPipe } from '../../pipes/sort';
 
 /**
  * Generated class for the MovieViewPage page.
@@ -15,7 +18,7 @@ import { FormControl } from '@angular/forms';
 @IonicPage()
 @Component({
   selector: 'page-movie-view',
-  templateUrl: 'movie-view.html',
+  templateUrl: 'movie-view.html'
 })
 export class MovieViewPage implements OnDestroy {
 
@@ -31,6 +34,9 @@ export class MovieViewPage implements OnDestroy {
   Director:string;
   Language:string;
   Actors:string;
+  
+  commentsRef:AngularFireList<any>;
+  comments:any;
 
   isAddComment:boolean = false;
   comment = new FormControl('');
@@ -38,10 +44,11 @@ export class MovieViewPage implements OnDestroy {
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               private CONFIG: GlobalService,
-              private movieService: MovieProvider) {
+              private movieService: MovieProvider,
+              private Angfirebase: AngularFireDatabase) {
                 
                 this.imdbId = this.navParams.get('imdbId');
-
+                this.commentsRef = this.Angfirebase.list( '/Comments', ref => ref.orderByChild('imdbId').equalTo(this.imdbId) );
   }
 
   ionViewDidLoad() {
@@ -58,15 +65,29 @@ export class MovieViewPage implements OnDestroy {
             this.Language = resp.Language;
             this.Actors = resp.Actors;
           });
+      
+          console.log('imdbId => ', this.imdbId);
+          
+          this.commentsRef
+              .valueChanges()
+              .subscribe((resp) => {
+                  this.comments = resp.sort(function(a, b) {
+                      return b.date - a.date; 
+                   });
+              });
+  }
 
+  addComment() {
+    this.commentsRef.push({
+      userId: 'currentUser123',
+      imdbId: this.imdbId,
+      comment: this.comment.value,
+      date:Date.now()
+    });
   }
 
   ngOnDestroy() {
     this.getMovieByIdSubscript.unsubscribe();
-  }
-
-  addComment() {
-    console.log(this.imdbId, this.comment.value);
   }
 
 }
