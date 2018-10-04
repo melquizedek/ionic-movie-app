@@ -38,7 +38,7 @@ export class MoviesPage implements OnDestroy {
   }
 
   searchMovie(ev: any) {
-      let keyword = (ev.target.value) ? ev.target.value : "Marvel";
+      let keyword = (ev.target.value) ? ev.target.value : "hero";
       if (keyword) {
         this.movieService.getMovie(keyword, '10', '', '');
       }

@@ -1,19 +1,4 @@
-page-movie-view {
-    ion-card img {
-        width: 50%; 
-        margin: auto;
-    }
-    .card-md {
-        ion-card-title {
-            p {
-                font-weight: bold;
-            }
-        }
-        p.title {
-            text-align: center;
-            font-size: 20px;
-        }
-    }
+page-ratings {
     ul.rating-con {
         display: inline-flex;
         list-style: none;
@@ -30,5 +15,5 @@ page-movie-view {
             font-size: 30px;
           }
         }
-      } 
+      }
 }

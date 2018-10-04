@@ -5,8 +5,6 @@ import { Subscription } from 'rxjs/Subscription';
 import { GlobalService } from '../../providers/global.service';
 import { FormControl } from '@angular/forms';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
-import { Comment } from '@angular/compiler';
-import { ArraySortPipe } from '../../pipes/sort';
 
 /**
  * Generated class for the MovieViewPage page.
@@ -23,7 +21,9 @@ import { ArraySortPipe } from '../../pipes/sort';
 export class MovieViewPage implements OnDestroy {
 
   imdbId: any;
+  
   getMovieByIdSubscript: Subscription;
+  getCommentsSubscript: Subscription;
 
   Poster:string;
   Title:string;
@@ -35,6 +35,8 @@ export class MovieViewPage implements OnDestroy {
   Language:string;
   Actors:string;
   
+  rate:number = 0;
+
   commentsRef:AngularFireList<any>;
   comments:any;
 
@@ -68,13 +70,14 @@ export class MovieViewPage implements OnDestroy {
       
           console.log('imdbId => ', this.imdbId);
           
-          this.commentsRef
-              .valueChanges()
-              .subscribe((resp) => {
-                  this.comments = resp.sort(function(a, b) {
-                      return b.date - a.date; 
-                   });
-              });
+          this.getCommentsSubscript 
+                  = this.commentsRef
+                        .valueChanges()
+                        .subscribe((resp) => {
+                            this.comments = resp.sort(function(a, b) {
+                                return b.date - a.date; 
+                            });
+                        });
   }
 
   addComment() {
@@ -88,6 +91,7 @@ export class MovieViewPage implements OnDestroy {
 
   ngOnDestroy() {
     this.getMovieByIdSubscript.unsubscribe();
+    this.getCommentsSubscript.unsubscribe();
   }
 
 }

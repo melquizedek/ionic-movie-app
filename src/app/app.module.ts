@@ -15,6 +15,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { RatingsPage } from '../pages/ratings/ratings';
+import { Ionic2RatingModule } from 'ionic2-rating';
 
 export const firebaseConf = {
   apiKey: "AIzaSyC_MZY9iMpZTVQfPJS8nJY8xsWiMUL2PW0",
@@ -30,13 +32,15 @@ export const firebaseConf = {
     MyApp,
     HomePage,
     MoviesPage,
-    MovieViewPage  
+    MovieViewPage,
+    RatingsPage
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
     IonicModule.forRoot(MyApp),
+    Ionic2RatingModule,
     AngularFireModule.initializeApp(firebaseConf),
     AngularFireDatabaseModule
   ],
@@ -45,7 +49,8 @@ export const firebaseConf = {
     MyApp,
     HomePage,
     MoviesPage,
-    MovieViewPage
+    MovieViewPage,
+    RatingsPage
   ],
   providers: [
     StatusBar,
