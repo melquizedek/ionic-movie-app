@@ -19,7 +19,7 @@ import { GlobalService } from '../../providers/global.service';
 })
 export class MoviesPage implements OnDestroy {
 
-  movies: any = [];
+  movies: any = null;
   initTialMovieListSubcrip: Subscription;
   movieResultListSubscrip: Subscription;
 
