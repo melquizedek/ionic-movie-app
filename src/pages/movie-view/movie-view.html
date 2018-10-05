@@ -29,12 +29,12 @@
       </p>
       <ion-grid>
           <ion-row>
-            <ion-col col-7 >
-                <page-ratings [imdbID]="imdbId"></page-ratings>
+            <ion-col col-lg-7 col-md-7 col-sm-7>
+                <page-ratings [imdbID]="imdbId" [rateInPercent]=""></page-ratings>
             </ion-col>
-            <ion-col col-5>
+            <ion-col col-sm-5 col-md-5 col-lg-5 class="release-con">
                 <ion-item>
-                    <ion-icon name="calendar" item-start></ion-icon>
+                    <!-- <ion-icon name="calendar" item-start></ion-icon> -->
                     Released:
                     <ion-badge item-end>{{Released}}</ion-badge>
                 </ion-item>

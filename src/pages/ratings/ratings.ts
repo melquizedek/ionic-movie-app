@@ -16,56 +16,64 @@ import { map } from 'rxjs/operators';
 })
 export class RatingsPage {
 
-  ratingsRef: AngularFireList<any>;
-  @Input() imdbID: string; 
-  rate: number;
-  dataKey: any;
+  	ratingsRef: AngularFireList<any>;
+	@Input() imdbID: string;
+	@Input() rateInPercent: number = 0;
+  	rate: number = 0;
+  	dataKey: any;
 
-  constructor(public navCtrl: NavController, 
-              public navParams: NavParams,
-              private angFirebase: AngularFireDatabase) {
+	constructor(public navCtrl: NavController, 
+				public navParams: NavParams,
+				private angFirebase: AngularFireDatabase) {
 
-                setTimeout(() => {
-                    this.ratingsRef = this.angFirebase.list( '/Ratings', ref => ref.orderByChild('imdbId').equalTo(this.imdbID) ); 
-                    this.ratingsRef
-                            .snapshotChanges()
-                            .pipe(
-								map(actions => actions.map(a => {
-									if (a.payload.val().userId === 23)
-										return { key: a.key, ...a.payload.val() };
-									return null;
-								}))
-							).subscribe(resp => {
-								console.log(resp);
-								if (resp.length) {
-									this.rate = resp[0].ratings;
-									this.dataKey = resp[0].key;
-								}
-							} );
-                });
-  }
+							setTimeout(() => {
+									this.ratingsRef = this.angFirebase.list( '/Ratings', ref => ref.orderByChild('imdbId').equalTo(this.imdbID) ); 
+									this.ratingsRef.snapshotChanges()
+													.pipe(
+																map(actions => actions.map(a => {
+																	if (a.payload.val().userId === 23)
+																		return { key: a.key, ...a.payload.val() };
+																	return null;
+																}))
+															).subscribe(resp => {
+																	console.log(resp);
+																	this.rateInPercent = this.getPercentage(this.rate);
+																	if (resp.length) {
+																		this.rate = resp[0].ratings;
+																		this.rateInPercent = this.getPercentage(resp[0].ratings);
+																		this.dataKey = resp[0].key;
+																	}
+															});
+							});
+							// console.log('from ratings page = ', this.ratings);
+	}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RatingsPage');
   }
 
   onModelChange(e) {
-    console.log(e, this.imdbID);
-	
-	if (this.dataKey) {
-		this.ratingsRef.set(this.dataKey, {
-			imdbId: this.imdbID,
-			ratings: e,
-			userId: 23
-		});
-	} else {
-		this.ratingsRef.push({
-			imdbId: this.imdbID,
-			ratings: e,
-			userId: 23
-		});
-	}
-
+	  		this.rateInPercent = this.getPercentage(e);
+			if (this.dataKey) {
+				this.ratingsRef.set(this.dataKey, {
+					imdbId: this.imdbID,
+					ratings: e,
+					userId: 23
+				});
+			} else {
+				this.ratingsRef.push({
+					imdbId: this.imdbID,
+					ratings: e,
+					userId: 23
+				});
+			}
   }
+
+	private getPercentage(ratings: number) : any {
+			const starTotal = 5;
+			const starPercentage = (ratings / starTotal) * 100;
+			const starPercentageRounded = `${(Math.round(starPercentage / 10) * 10)}%`;
+			return starPercentageRounded;
+	}
 
 }

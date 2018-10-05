@@ -27,9 +27,11 @@ export class MoviesPage implements OnDestroy {
               public navParams: NavParams,
               private CONFIG: GlobalService,
               private movieService: MovieProvider) {
-                this.movieService.getMovie('Marvel', '10', '', '');
+                this.movieService.getMovie('earth', '10', '', '');
                 this.initTialMovieListSubcrip  = this.movieService.movies$.subscribe((resp: any) => {
-                     this.movies = resp.Search;
+                     this.movies = resp.Search.sort((a, b) => {
+                                        return b.Year - a.Year
+                                    });
                   });
   }
 
@@ -43,7 +45,9 @@ export class MoviesPage implements OnDestroy {
         this.movieService.getMovie(keyword, '10', '', '');
       }
       this.movieResultListSubscrip = this.movieService.movies$.subscribe((resp: any) => {
-          this.movies = resp.Search;
+          this.movies = resp.Search.sort((a, b) => {
+                              return b.Year - a.Year;
+                          });
       });
   }
 

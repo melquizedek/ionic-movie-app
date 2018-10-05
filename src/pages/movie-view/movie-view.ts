@@ -61,6 +61,7 @@ export class MovieViewPage implements OnDestroy {
             this.Title = resp.Title;
             this.Plot = resp.Plot;
             this.Ratings = resp.Ratings;
+            //console.log("from movie-view page Ratings = ", resp.Ratings);
             this.Released = resp.Released;
             this.Genre = resp.Genre;
             this.Director = resp.Director;

@@ -3,6 +3,13 @@ page-ratings {
         display: inline-flex;
         list-style: none;
         padding: 0;
+
+        li.percent-con {
+          padding-left:15px;
+          ion-badge {
+            font-size: 16px;
+          }
+        }
     }
     ul.rating {
         padding: 0px;
