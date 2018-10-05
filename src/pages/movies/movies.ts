@@ -19,7 +19,7 @@ import { GlobalService } from '../../providers/global.service';
 })
 export class MoviesPage implements OnDestroy {
 
-  movies: any;
+  movies: any = [];
   initTialMovieListSubcrip: Subscription;
   movieResultListSubscrip: Subscription;
 
@@ -40,14 +40,17 @@ export class MoviesPage implements OnDestroy {
   }
 
   searchMovie(ev: any) {
-      let keyword = (ev.target.value) ? ev.target.value : "hero";
+      let keyword = (ev.target.value) ? ev.target.value : "earth";
       if (keyword) {
         this.movieService.getMovie(keyword, '10', '', '');
       }
       this.movieResultListSubscrip = this.movieService.movies$.subscribe((resp: any) => {
-          this.movies = resp.Search.sort((a, b) => {
-                              return b.Year - a.Year;
-                          });
+          this.movies = null;
+          if (resp.Response === "True") {
+              this.movies = resp.Search.sort((a, b) => {
+                                return b.Year - a.Year;
+                            });
+          }
       });
   }
 
